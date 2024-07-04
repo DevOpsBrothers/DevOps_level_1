@@ -1,24 +1,31 @@
+# Use the Alpine base image
 FROM alpine:latest
 
-LABEL maintainer="your-email@example.com"
-LABEL version="1.0"
-LABEL description="This is a base image built from scratch using Alpine Linux with PostgreSQL."
+# Install necessary packages
+RUN apk update && \
+    apk add --no-cache bash postgresql postgresql-contrib shadow
 
-RUN apk update && apk upgrade && \
-    apk add --no-cache bash postgresql postgresql-contrib
+# Create a non-root user with adduser
+RUN addgroup -S pgdbuser && \
+    adduser -DG pgdbuser -h /pgdbuser pgdbuser && \
+    mkdir -p /pgdbuser/Database/ && \
+    chown -R pgdbuser:pgdbuser /pgdbuser && \
+    chmod -R 700 /pgdbuser/Database
 
-RUN addgroup -S postgres && adduser -S postgres -G postgres
+# Initialize PostgreSQL database in the custom directory
+RUN su pgdbuser -c "initdb -D /pgdbuser/Database/"
 
+# Set the default shell to bash
 SHELL ["/bin/bash", "-c"]
 
-RUN mkdir -p /var/lib/postgresql/data && \
-    chown -R postgres:postgres /var/lib/postgresql && \
-    su postgres -c "initdb -D /var/lib/postgresql/data"
+# Switch to the non-root user
+USER pgdbuser
 
-USER postgres
+# Set environment variables for PostgreSQL
+ENV PGDATA=/pgdbuser/Database/
 
-ENV PGDATA=/var/lib/postgresql/data
-
+# Expose the PostgreSQL port
 EXPOSE 5432
 
-CMD ["postgres", "-D", "/var/lib/postgresql/data"]
+# Set the default command to start PostgreSQL
+CMD ["postgres", "-D", "/pgdbuser/Database/"]
