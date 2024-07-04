@@ -3,29 +3,47 @@ FROM alpine:latest
 
 # Install necessary packages
 RUN apk update && \
-    apk add --no-cache bash postgresql postgresql-contrib shadow
+    apk add --no-cache bash build-base openssl-dev readline-dev zlib-dev shadow icu-dev linux-headers
 
-# Create a non-root user with adduser
-RUN addgroup -S pgdbuser && \
-    adduser -DG pgdbuser -h /pgdbuser pgdbuser && \
-    mkdir -p /pgdbuser/Database/ && \
-    chown -R pgdbuser:pgdbuser /pgdbuser && \
-    chmod -R 700 /pgdbuser/Database
+# Create a non-root user and necessary directories
+RUN addgroup -S postgres && \
+    adduser -S -G postgres -h /postgres postgres && \
+    mkdir -p /postgres/Database && \
+    mkdir -p /postgres/install 
+
+#\
+# mkdir -p /run/postgresql && \
+
+
+# Copy PostgreSQL source code to the container
+ADD postgresql-16.3.tar.gz /postgres/install
+RUN chown -R postgres:postgres /postgres && \
+    chmod -R 700 /postgres
+
+# WORKDIR /PGDB_installed
+# Extract the source code
+RUN cd /postgres/install && \
+    # tar -xzf postgresql-16.3.tar.gz && \
+    cd postgresql-16.3 && \
+    ./configure --prefix=/postgres/install && \
+    make && \
+    make install
+
+
+RUN chown -R postgres:postgres /postgres && \
+    chmod -R 755 /postgres
+
 
 # Initialize PostgreSQL database in the custom directory
-RUN su pgdbuser -c "initdb -D /pgdbuser/Database/"
-
-# Set the default shell to bash
-SHELL ["/bin/bash", "-c"]
-
-# Switch to the non-root user
-USER pgdbuser
+USER postgres
+RUN /postgres/install/bin/initdb -D /postgres/Database/
 
 # Set environment variables for PostgreSQL
-ENV PGDATA=/pgdbuser/Database/
+ENV PATH=/postgres/install/bin:$PATH \
+    PGDATA=/postgres/Database
 
 # Expose the PostgreSQL port
 EXPOSE 5432
 
 # Set the default command to start PostgreSQL
-CMD ["postgres", "-D", "/pgdbuser/Database/"]
+CMD ["postgres", "-D", "/postgres/Database/"]
