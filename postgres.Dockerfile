@@ -38,6 +38,15 @@ RUN chown -R postgres:postgres /postgres && \
 USER postgres
 RUN /postgres/install/bin/initdb -D /postgres/Database/
 
+# Update PostgreSQL configuration to listen on all interfaces
+RUN echo "listen_addresses='*'" >> /postgres/Database/postgresql.conf && \
+    echo "host all all 0.0.0.0/0 md5" >> /postgres/Database/pg_hba.conf
+
+# Set the password for the postgres user
+RUN /postgres/install/bin/pg_ctl -D /postgres/Database/ -o "-c listen_addresses=''" start && \
+    /postgres/install/bin/psql -c "ALTER USER postgres WITH PASSWORD 'postgres';" && \
+    /postgres/install/bin/pg_ctl -D /postgres/Database/ stop
+
 # Set environment variables for PostgreSQL
 ENV PATH=/postgres/install/bin:$PATH \
     PGDATA=/postgres/Database
@@ -47,3 +56,7 @@ EXPOSE 5432
 
 # Set the default command to start PostgreSQL
 CMD ["postgres", "-D", "/postgres/Database/"]
+
+# Get-NetTCPConnection -State Listen
+# docker build -t pgdb_img:v1.0 .
+# docker run -d --name pgdbc_v1 -p 5432:5432 pgdb_img:v1.0
