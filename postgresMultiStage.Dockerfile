@@ -70,3 +70,5 @@ CMD ["postgres", "-D", "/postgres/Database/"]
 # Get-NetTCPConnection -State Listen
 # docker build -t pgdb_img:v1.0 .
 # docker run -d --name pgdbc_v1 -p 5432:5432 pgdb_img:v1.0
+## WITH VOLUME :
+# docker run -d --name pgdbc_v1 -p 5432:5432 -v db_data:/postgres/Database pgdb_img:v1.1
