@@ -1,6 +1,8 @@
 # DevOps_level_1
 This repo is to learn and push the knowledge in Repo
 
+> [![My Skills](https://skillicons.dev/icons?i=linux,docker,kubernetes,postgres,git,github,bash)](https://skillicons.dev)
+
 # Target 1 :
 ## A. To create a base image of own for postgres from alpine linux
 ## B. To add volume to it : to learn more about volume bind
