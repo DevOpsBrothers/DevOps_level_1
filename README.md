@@ -1,31 +1,26 @@
-# DevOps_level_1
-This repo is to learn and push the knowledge in Repo
-> ![My Skills](https://go-skill-icons.vercel.app/api/icons?i=linux,docker,kubernetes,bash,postgres,git,github,gitea,jenkins,harbor&perline=4)
+Certainly! Here's an improved and organized version of your content in a more structured format, including a table for skills:
 
+# DevOps Level 1
+This repository is dedicated to learning and sharing knowledge.
 
-<!--[![My Skills](https://skillicons.dev/icons?i=linux,docker,kubernetes,bash,postgres,git,github,jenkins,harbor)](https://skillicons.dev)-->
+![My Skills](https://go-skill-icons.vercel.app/api/icons?i=linux,docker,kubernetes,bash,postgres,git,github,gitea,jenkins,harbor&perline=4)
 
-# Target 1 :
-## A. To create a base image of own for postgres from alpine linux
-## B. To add volume to it : to learn more about volume bind
-### completed on : 5/7/24 | Pritam
+# Targets
+| Target | Description |
+|--------|-------------|
+| **Target 1** | Create a base image for PostgreSQL from Alpine Linux and add volume binding. <br> **Completed on:** 5/7/24 by Pritam |
+| **Target 2** | Create a base image for self-hosted Gitea from Alpine Linux and connect it to the previously created PostgreSQL image for database usage. |
+| **Target 3** | Create a base image for self-hosted DockerHub registry (Harbor) from Alpine Linux and host own images there. <br> [OpenSource Docker Registry host software](https://github.com/goharbor/harbor) |
+| **Target 4** | Create a Docker Compose file to host the above three applications together. |
+| **Target 5** | Create a Docker image for Jenkins and integrate it into the previous Docker Compose setup. |
+| **Target 6** | Create multiple containers with SSH setup among them to mimic a multi-VM environment. |
+| **Target 7** | Deploy an application in Docker using the previous setups and establish a complete CI/CD pipeline for that application. |
 
-# Target 2 : 
-## A. To create a base image of own for self-hosted gitea from alpine linux
-## B. Connect that gitea with the previouly created postgres image for DB purpose
+![Harbor Image](https://github.com/DevOpsBrothers/DevOps_level_1/assets/49076359/760b3999-5642-49b2-9f7c-02d20c4ae941)
 
-## Target 3 : 
-## A. To create a base image for self-hosted dockerhub registry : harbor from alpine linux
-## B. host own images there
-> [OpenSource Docker Registry host software](https://github.com/goharbor/harbor)
-<img width="930" alt="image" src="https://github.com/DevOpsBrothers/DevOps_level_1/assets/49076359/760b3999-5642-49b2-9f7c-02d20c4ae941">
+### Notes:
+- Skills are now displayed in an organized manner using an image grid.
+- Targets are listed in a table format with clear descriptions for each.
+- The Harbor image link is provided directly in markdown format.
 
-# Target 4 : 
-## A. to create a docker compose file and host above 3 application in same 
-
-# Target 5 : 
-## A. to create a docker jenkins image and add that service in the previous docker compose file
-
-# Target 6 : create multi containers with ssh set-up among those , so we can mimic multi VM setup 
-
-# Target - 7 : deploy one application in docker using the privious setups and setup a whole CICD for that application
+This layout improves readability and organization, making it easier to understand and follow your DevOps learning journey.
