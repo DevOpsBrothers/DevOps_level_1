@@ -175,3 +175,44 @@ PATH = /gitea/data/gitea.db
 ---
 
 This README.md provides an overview of setting up and deploying Gitea using Docker, including Dockerfile explanations, setup instructions, and a sample `app.ini` configuration. Adjust paths, versions, and configurations as per your environment and requirements.
+
+To disconnect a container from a Docker network, you can use the `docker network disconnect` command followed by the network name and the container ID or name. Here's how you can do it:
+
+### Disconnecting a Container from a Docker Network
+
+1. **Find the Container ID or Name:**
+
+   First, you need to find the ID or name of the container you want to disconnect. You can list all running containers with:
+
+   ```bash
+   docker ps
+   ```
+
+   This command will list all running containers along with their IDs and names.
+
+2. **Disconnect the Container:**
+
+   Once you have the container ID or name and the network name, use the `docker network disconnect` command:
+
+   ```bash
+   docker network disconnect <network_name> <container_id_or_name>
+   ```
+
+   Replace `<network_name>` with the name of the Docker network and `<container_id_or_name>` with the ID or name of the container you want to disconnect.
+
+### Example
+
+Let's say you have a container named `my-container` connected to a network named `my-network`:
+
+```bash
+docker network disconnect my-network my-container
+```
+
+This command will disconnect `my-container` from `my-network`.
+
+### Notes
+
+- Ensure that the container is not actively using the network or services provided by other containers in the network before disconnecting.
+- After disconnecting, the container will no longer have network connectivity through `my-network`.
+
+This process allows you to manage network connectivity for Docker containers, helping you control how containers communicate and interact within your Docker environment.
