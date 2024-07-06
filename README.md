@@ -1,7 +1,9 @@
 # DevOps_level_1
 This repo is to learn and push the knowledge in Repo
+> ![My Skills](https://go-skill-icons.vercel.app/api/icons?i=linux,docker,kubernetes,bash,postgres,git,github,gitea,jenkins,harbor&perline=4)
 
-> [![My Skills](https://skillicons.dev/icons?i=linux,docker,kubernetes,postgres,git,github,bash)](https://skillicons.dev)
+
+<!--[![My Skills](https://skillicons.dev/icons?i=linux,docker,kubernetes,bash,postgres,git,github,jenkins,harbor)](https://skillicons.dev)-->
 
 # Target 1 :
 ## A. To create a base image of own for postgres from alpine linux
