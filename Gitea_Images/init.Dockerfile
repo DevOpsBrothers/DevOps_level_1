@@ -34,6 +34,7 @@ EXPOSE 3000
 
 # RUN ./gitea web migrate --config app.ini -p 3000
 
+#start server
 CMD ["./gitea","web","--config","./app.ini"]
 
 # docker network create gitea-network
