@@ -3,7 +3,7 @@ Certainly! Here's an improved and organized version of your content in a more st
 # DevOps Level 1
 This repository is dedicated to learning and sharing knowledge.
 
-![My Skills](https://go-skill-icons.vercel.app/api/icons?i=linux,docker,kubernetes,bash,postgres,git,github,gitea,jenkins,harbor&perline=4)
+![My Skills](https://go-skill-icons.vercel.app/api/icons?i=linux,docker,kubernetes,bash,postgres,git,github,gitea,jenkins,harbor,vscode&perline=6)
 
 # Targets
 | Target | Description |
