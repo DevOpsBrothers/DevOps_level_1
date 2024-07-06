@@ -17,7 +17,7 @@ RUN addgroup -S gitea && \
 ADD https://dl.gitea.com/gitea/1.22.0/gitea-1.22.0-linux-amd64 /gitea/install/gitea
 
 # app.ini into binary file
-ADD Gitea_Images/app.ini /gitea/install/
+ADD app.ini /gitea/install/
 
 RUN chown -R gitea:gitea /gitea/ && \
     cd /gitea && \
