@@ -3,7 +3,8 @@ name: giteacomposed
 services:
   gitea_server:
     # build: ./Gitea_Images
-    image: gitea_image:v1.0
+    # image: gitea_image:v1.0
+    image: pritamchk98/gitea_image:v1.0
     ports:
       - "3000:3000"
     networks:
@@ -12,7 +13,7 @@ services:
       - gitea_data:/gitea
 
   db_server:
-    image: pgdb_img:v1.1
+    image: pritamchk98/pgdb_img:v1.1
     # build: ./Postgres_Images
     hostname: postgres
     ports:
