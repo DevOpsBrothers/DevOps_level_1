@@ -1,0 +1,31 @@
+name: vmreplica
+
+services:
+  container1:
+    image: ssh-container:v1
+    container_name: container1
+    # ports:
+      # - "2222:22"
+    networks:
+      - multi_vm_network
+
+  container2:
+    image: ssh-container:v1
+    # ports:
+      # - "2222:22"
+    container_name: container2
+    networks:
+      - multi_vm_network
+
+  container3:
+    image: ssh-container:v1
+    container_name: container3
+    # ports:
+      # - "2222:22"
+    networks:
+      - multi_vm_network
+
+networks:
+  multi_vm_network:
+    # external: true
+    # name: multi_vm_network
