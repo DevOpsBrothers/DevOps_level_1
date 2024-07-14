@@ -1,9 +1,13 @@
 Certainly! Here's an improved and organized version of your content in a more structured format, including a table for skills:
 
+
+
+> My DockerHub user ID : pritamchk98
+
 # DevOps Level 1
 This repository is dedicated to learning and sharing knowledge.
 
-![My Skills](https://go-skill-icons.vercel.app/api/icons?i=linux,docker,kubernetes,bash,postgres,git,github,gitea,jenkins,harbor,vscode&perline=6)
+![My Skills](https://go-skill-icons.vercel.app/api/icons?i=linux,docker,kubernetes,bash,postgres,git,github,gitea,jenkins,vscode,&perline=6)
 
 # Targets
 | Target | Description |
@@ -16,7 +20,23 @@ This repository is dedicated to learning and sharing knowledge.
 | **Target 6** | Create multiple containers with SSH setup among them to mimic a multi-VM environment. |
 | **Target 7** | Deploy an application in Docker using the previous setups and establish a complete CI/CD pipeline for that application. |
 
-![Harbor Image](https://github.com/DevOpsBrothers/DevOps_level_1/assets/49076359/760b3999-5642-49b2-9f7c-02d20c4ae941)
+-----
+## Last Update :
+>```docker-cli
+>docker login
+>docker push pritamchk98/docker-images/gitea_image:v1.0  
+>docker tag gitea_image:v1.0 pritamchk98/gitea_image:v1.0
+>docker push pritamchk98/gitea_image:v1.0
+>docker tag pgdb_img:v1.1 pritamchk98/pgdb_img:v1.1      
+>docker push pritamchk98/pgdb_img:v1.1
+>```
+
+### Dockerhub : `gitea` & `postgress` images:
+1. [**gitea**](https://hub.docker.com/repository/docker/pritamchk98/gitea_image/general)
+2. [**postgres**](https://hub.docker.com/repository/docker/pritamchk98/pgdb_img/general)
+
+----
+<!-- ![Harbor Image](https://github.com/DevOpsBrothers/DevOps_level_1/assets/49076359/760b3999-5642-49b2-9f7c-02d20c4ae941) -->
 
 ### Notes:
 - Skills are now displayed in an organized manner using an image grid.
@@ -24,3 +44,6 @@ This repository is dedicated to learning and sharing knowledge.
 - The Harbor image link is provided directly in markdown format.
 
 This layout improves readability and organization, making it easier to understand and follow your DevOps learning journey.
+
+
+[Docker Compose](https://docs.docker.com/compose/compose-file/build/)

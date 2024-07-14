@@ -1,0 +1,36 @@
+name: giteacomposed
+
+services:
+  gitea_server:
+    # build: ./Gitea_Images
+    # image: gitea_image:v1.0
+    image: pritamchk98/gitea_image:v1.0
+    ports:
+      - "3000:3000"
+    networks:
+      - gitea-network
+    volumes:
+      - gitea_data:/gitea
+
+  db_server:
+    image: pritamchk98/pgdb_img:v1.1
+    # build: ./Postgres_Images
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - gitea-network
+    volumes:
+      - pgdb_data:/postgres/Database
+
+networks:
+  gitea-network:
+
+
+volumes:
+  pgdb_data:
+    external: true
+    name: pgdb_data
+  gitea_data:
+    external: true
+    name: gitea_data

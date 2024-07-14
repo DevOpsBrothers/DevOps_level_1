@@ -1,0 +1,17 @@
+# version: '3.8'
+name: jnk_server
+services:
+  jenkins:
+    build: .
+    container_name: c_jenkins
+    # privileged: true
+    restart: on-failure
+    ports:
+      - "9080:9080"
+      - "2222:22"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /c/Users/PRITAM/Desktop/DOCKER/HANDS_ON/JENKINS:/home/jenkins/WORKSPACE
+      # - "//wsl$/Ubuntu/usr/bin/docker:/usr/bin/docker"
+volumes:
+  jenkins_data:

@@ -1,0 +1,8 @@
+softwares:
+  runtime:
+    jdk: https://download.oracle.com/java/22/latest/jdk-22_linux-x64_bin.tar.gz
+  ssh:
+    server-client: https://matt.ucc.asn.au/dropbear/dropbear-2024.84.tar.bz2
+  jenkins:
+    war: https://get.jenkins.io/war-stable/2.452.3/jenkins.war
+    sha256: 45fd2b877f9709a52b984d9c7d6f435bc05f6adee61291d22d30b5f1e8fd8c59
