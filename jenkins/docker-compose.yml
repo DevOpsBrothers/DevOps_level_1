@@ -5,13 +5,15 @@ services:
     # container_name: "img_jenkins"
     # image: 
     container_name: c_jenkins
+    # user: jenkins
     restart: on-failure
     ports:
       - "9080:9080"
       - "2222:22"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /c/Users/PRITAM/Desktop/DOCKER/HANDS_ON/JENKINS:/home/jenkins
-      - \\wsl.localhost\\Ubuntu\\usr\\bin\\docker:/usr/bin/docker
+      - /c/Users/PRITAM/Desktop/DOCKER/HANDS_ON/JENKINS:/home/jenkins/WORKSPACE
+      # - \\wsl.localhost\\Ubuntu\\usr\\bin\\docker:/usr/bin/docker
+      - "//wsl$/Ubuntu/usr/bin/docker:/usr/bin/docker"
 volumes:
   jenkins_data:
