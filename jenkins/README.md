@@ -53,7 +53,7 @@ This compose file references local images created using the following commands:
 >   jenkins_data:
 > ```
 
-> [!INFO]
+> [!NOTE]
 > The line **`/var/run/docker.sock:/var/run/docker.sock`** in a Docker Compose or Docker command binds the Docker Unix socket from the host (**`/var/run/docker.sock`**) to the same location within the container (**`/var/run/docker.sock`**). Here's what it does:
 >
 > **Socket Binding:** Docker uses a Unix socket (docker.sock) to communicate between the Docker daemon running on the host and Docker client commands. This socket file (docker.sock) is located at `/var/run/docker.sock` on the host machine by default.
