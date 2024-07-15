@@ -7,7 +7,8 @@ Certainly! Here's an improved and organized version of your content in a more st
 # DevOps Level 1
 This repository is dedicated to learning and sharing knowledge.
 
-![My Skills](https://go-skill-icons.vercel.app/api/icons?i=linux,docker,kubernetes,bash,postgres,git,github,gitea,jenkins,vscode,&perline=6)
+<!--https://github.com/lelouchfr/skill-icons-->
+![My Skills](https://go-skill-icons.vercel.app/api/icons?i=linux,docker,kubernetes,bash,postgres,git,github,gitea,jenkins,vscode,nginx&per,sonarqube,line=6)
 
 # Targets
 | Target No | Subject | Status |
@@ -21,6 +22,7 @@ This repository is dedicated to learning and sharing knowledge.
 | Target 7  | Deploy an application in Docker using the previous setups and establish a complete CI/CD pipeline for that application. | <span style="color:red">Not Started</span> |
 | Future Target | ELK stack | <span style="color:yellow">Planned</span> |
 | Future Target | SonarQube | <span style="color:yellow">Planned</span> |
+| Future Target | Nginx (load balancer) | <span style="color:yellow">Planned</span> |
 
 -----
 ## Last Update :
