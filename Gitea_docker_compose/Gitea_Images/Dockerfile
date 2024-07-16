@@ -13,7 +13,7 @@ RUN addgroup -S gitea && \
     chown -R gitea:gitea /gitea/install/
 
 
-# Download gitea binary (version:1.22.0) in nstall folder
+# Download gitea binary (version:1.22.0) in install folder
 ADD https://dl.gitea.com/gitea/1.22.0/gitea-1.22.0-linux-amd64 /gitea/install/gitea
 
 # app.ini into binary file
