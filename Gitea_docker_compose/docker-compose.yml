@@ -11,6 +11,9 @@ services:
       - gitea-network
     volumes:
       - gitea_data:/gitea
+    depends_on:
+      - db_server
+    restart: on-failure
 
   db_server:
     image: pritamchk98/pgdb_img:v1.1
