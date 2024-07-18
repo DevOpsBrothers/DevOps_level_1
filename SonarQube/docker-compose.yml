@@ -1,0 +1,22 @@
+name: "sq"
+
+services:
+  pgdb_server:
+    build: ./DB
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdb_vol:/postgres/Database/
+  sonar_server:
+    build: .
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonar_data_vol:/home/sonarapp/data/
+    env_file:
+      - sonarapp.env
+    depends_on:
+      - pgdb_server
+volumes:
+  sonar_data_vol:
+  pgdb_vol:
