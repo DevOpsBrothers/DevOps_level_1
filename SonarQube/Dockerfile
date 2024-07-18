@@ -11,7 +11,7 @@ RUN apt-get update && \
 #     apk add --no-cache shadow openjdk17-jdk bash
 
 # for debug purpose
-RUN echo "`which java`" && sleep 10
+RUN echo "`which java`" 
 
 # this are dynamic arguments to take it from user at build time 
 ARG PROJECT_NAME \
@@ -32,8 +32,12 @@ ENV PROJECT_NAME=${PROJECT_NAME} \
     SONAR_DB_USER=${SONAR_DB_USER}}
 
 # Create a non-root user and necessary directories
-RUN addgroup -S sonarapp && \
-    adduser -S -G sonarapp -h /home/sonarapp sonarapp 
+
+# Create a non-root user and necessary directories
+RUN groupadd -r sonarapp && \
+    useradd -r -g sonarapp -m -d /home/sonarapp sonarapp
+# RUN addgroup -S sonarapp && \
+#     adduser -S -G sonarapp -h /home/sonarapp sonarapp 
 # && \
 # chown -R sonarapp:sonarapp /home/sonarapp/
 
@@ -67,4 +71,4 @@ RUN sed -i "/sonar.path.data/d" ${SONAR_CONF_PROPFILE} && \
 # WORKDIR /home/sonarapp/
 SHELL [ "/bin/bash" ]
 USER sonarapp
-CMD [ "/home/sonarapp/bin/linux-x86-64/sonar.sh", "start" ]
+CMD [ "/home/sonarapp/bin/linux-x86-64/sonar.sh", "start" ,">","out" ,"&&","tail","-f","out" ]
