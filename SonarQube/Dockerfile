@@ -3,7 +3,8 @@ FROM alpine:latest AS build
 
 # Install necessary packages
 RUN apk update && \
-    apk add --no-cache openjdk17-jdk bash unzip
+    apk add --no-cache unzip && \
+    rm -rf /var/cache/apk/*
 
 # Dynamic arguments to take from the user at build time
 ARG PROJECT_NAME
@@ -27,6 +28,7 @@ RUN cd /home/sonarapp/ && \
 
 # Removing the property lines to replace with the values provided at build time by the user
 COPY sonar_add.properties /home/sonarapp/conf/
+
 RUN sed -i "/sonar.path.data/d" ${SONAR_CONF_PROPFILE} && \
     sed -i "/sonar.path.temp/d" ${SONAR_CONF_PROPFILE} && \
     sed -i "/sonar.jdbc.username/d" ${SONAR_CONF_PROPFILE} && \
@@ -41,7 +43,8 @@ FROM alpine:latest
 
 # Install only the necessary runtime packages
 RUN apk update && \
-    apk add --no-cache openjdk17-jre bash procps
+    apk add --no-cache openjdk17-jre procps shadow && \
+    rm -rf /var/cache/apk/*
 
 # Create a non-root user and necessary directories
 RUN addgroup -S sonarapp && \
@@ -51,7 +54,7 @@ RUN addgroup -S sonarapp && \
 COPY --from=build /home/sonarapp /home/sonarapp
 
 # Set the shell to bash and the user to sonarapp
-SHELL [ "/bin/bash" ]
+# SHELL [ "/bin/bash" ]
 USER sonarapp
 
 # Command to run the SonarQube server
