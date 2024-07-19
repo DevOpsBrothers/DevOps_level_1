@@ -1,0 +1,42 @@
+version: '3'
+services:
+  sonarqube:
+    image: anudeep0496/sonarqube-with-sha256:v1.2
+    ports:
+      - "9089:9000"
+    environment:
+      - SONAR_JDBC_URL=jdbc:postgresql://postgresql:5432/sonar
+      - SONAR_JDBC_USERNAME=sonar
+      - SONAR_JDBC_PASSWORD=sonar
+    depends_on:
+      - postgresql
+    volumes:
+      - sonarqube_db_data:/opt/sonarqube/data
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_data:/opt/sonarqube/temp
+
+  postgresql:
+    image: anudeep0496/pgdb_img:v2.1
+    environment:
+      - POSTGRES_DB=sonar
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+
+volumes:
+  sonarqube_db_data:
+    driver: local
+  sonarqube_conf:
+    driver: local
+  sonarqube_extensions:
+    driver: local
+  sonarqube_logs:
+    driver: local
+  sonarqube_data:
+    driver: local
+  postgresql_data:
+    driver: local
+
