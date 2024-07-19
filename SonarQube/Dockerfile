@@ -2,13 +2,13 @@ FROM ubuntu:latest
 
 # Install necessary packages
 RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk unzip bash && \
+    apt-get install -y openjdk-17-jre unzip bash && \
     rm -rf /var/lib/apt/lists/*
 # FROM alpine:latest
 
 # # Install necessary packages
 # RUN apk update && \
-#     apk add --no-cache shadow openjdk17-jdk bash
+#     apk add --no-cache shadow openjdk17-jdk bash procps
 
 # for debug purpose
 RUN echo "`which java`" 
@@ -71,4 +71,4 @@ RUN sed -i "/sonar.path.data/d" ${SONAR_CONF_PROPFILE} && \
 # WORKDIR /home/sonarapp/
 SHELL [ "/bin/bash" ]
 USER sonarapp
-CMD [ "/home/sonarapp/bin/linux-x86-64/sonar.sh", "start" ,">","out" ,"&&","tail","-f","out" ]
+CMD [ "/home/sonarapp/bin/linux-x86-64/sonar.sh", "console"]
