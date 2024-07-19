@@ -1,4 +1,5 @@
 **/*.tar.*
+**/bin/*.tgz
 **/*.war
 **/*.jar
 **/bin/*.zip
