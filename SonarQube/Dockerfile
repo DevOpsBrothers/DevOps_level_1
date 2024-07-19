@@ -41,7 +41,7 @@ FROM alpine:latest
 
 # Install only the necessary runtime packages
 RUN apk update && \
-    apk add --no-cache openjdk17-jdk bash procps
+    apk add --no-cache openjdk17-jre bash procps
 
 # Create a non-root user and necessary directories
 RUN addgroup -S sonarapp && \
