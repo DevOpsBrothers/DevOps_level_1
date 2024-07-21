@@ -1,7 +1,3 @@
-Certainly! Here's an improved and organized version of your content in a more structured format, including a table for skills:
-
-
-
 > My DockerHub user ID : pritamchk98
 
 # DevOps Level 1
