@@ -1,14 +1,10 @@
-Certainly! Here's an improved and organized version of your content in a more structured format, including a table for skills:
-
-
-
 > My DockerHub user ID : pritamchk98
 
 # DevOps Level 1
 This repository is dedicated to learning and sharing knowledge.
 
 <!--https://github.com/lelouchfr/skill-icons-->
-![My Skills](https://go-skill-icons.vercel.app/api/icons?i=linux,docker,kubernetes,bash,postgres,git,github,gitea,jenkins,vscode,nginx&per,sonarqube,line=6)
+![My Skills](https://go-skill-icons.vercel.app/api/icons?i=linux,docker,kubernetes,bash,postgres,git,github,gitea,jenkins,vscode,nginx,sonarqube,elasticsearch,&perline=6)
 
 # Targets
 | Target No | Subject | Status |

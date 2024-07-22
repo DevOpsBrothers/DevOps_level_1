@@ -1,70 +1,61 @@
-FROM ubuntu:latest
+# Stage 1: Build Stage
+FROM alpine:latest AS build
 
 # Install necessary packages
-RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk unzip bash && \
-    rm -rf /var/lib/apt/lists/*
-# FROM alpine:latest
+RUN apk update && \
+    apk add --no-cache unzip && \
+    rm -rf /var/cache/apk/*
 
-# # Install necessary packages
-# RUN apk update && \
-#     apk add --no-cache shadow openjdk17-jdk bash
+# Dynamic arguments to take from the user at build time
+ARG PROJECT_NAME
 
-# for debug purpose
-RUN echo "`which java`" && sleep 10
-
-# this are dynamic arguments to take it from user at build time 
-ARG PROJECT_NAME \
-    SONAR_DATA_PATH \
-    SONAR_TEMP_PATH \
-    SONAR_DB_URL \
-    SONAR_DB_USER_PASWD \
-    SONAR_DB_USER
-
-# setting environment variable for sonar conf file and sonar application
+# Setting environment variables
 ENV PROJECT_NAME=${PROJECT_NAME} \
     SONAR_JAVA_HOME=/usr/bin/java \
     SONAR_CONF_PROPFILE=/home/sonarapp/conf/sonar.properties \
-    SONAR_DATA_PATH=${SONAR_DATA_PATH}\
-    SONAR_TEMP_PATH=${SONAR_TEMP_PATH} \
-    SONAR_DB_URL=${SONAR_DB_URL} \
-    SONAR_DB_USER_PASWD=${SONAR_DB_USER_PASWD} \
-    SONAR_DB_USER=${SONAR_DB_USER}}
+    SONAR_CONF_PATH=/home/sonarapp/conf
 
 # Create a non-root user and necessary directories
 RUN addgroup -S sonarapp && \
-    adduser -S -G sonarapp -h /home/sonarapp sonarapp 
-# && \
-# chown -R sonarapp:sonarapp /home/sonarapp/
+    adduser -S -G sonarapp -h /home/sonarapp sonarapp
 
-# copying downloaded binary zip into target path 
+# Copying downloaded binary zip into target path and unzipping
 ADD ./bin/sonarqube-10.6.zip /home/sonarapp/
-
-
 RUN cd /home/sonarapp/ && \
-    ls -1 | xargs -I {} sh -c 'echo "{}" && unzip {}' &&\
-    rm -rf *.zip && \
-    ls -1 | xargs -I {} sh -c 'echo "{}" && mv {} sonarqube' &&\
-    cp -r sonarqube/* . && \
-    rm -rf sonarqube && \
-    ls -l && sleep 10 
-# Removing the property lines to replace with the values 
-# provided at build time the user
+    unzip sonarqube-10.6.zip && \
+    rm -rf sonarqube-10.6.zip && \
+    ls -1 | xargs -I {} sh -c 'cp -rv {}/* . && rm -rf {}'
+
+# Removing the property lines to replace with the values provided at build time by the user
+COPY sonar_add.properties /home/sonarapp/conf/
+
 RUN sed -i "/sonar.path.data/d" ${SONAR_CONF_PROPFILE} && \
     sed -i "/sonar.path.temp/d" ${SONAR_CONF_PROPFILE} && \
     sed -i "/sonar.jdbc.username/d" ${SONAR_CONF_PROPFILE} && \
     sed -i "/sonar.jdbc.password/d" ${SONAR_CONF_PROPFILE} && \
     sed -i "/sonar.jdbc.url/d" ${SONAR_CONF_PROPFILE} && \
-    echo "${SONAR_DATA_PATH}" >> ${SONAR_CONF_PROPFILE} && \
-    echo "${SONAR_TEMP_PATH}" >> ${SONAR_CONF_PROPFILE} && \
-    echo "${SONAR_DB_USER}" >> ${SONAR_CONF_PROPFILE} && \
-    echo "${SONAR_DB_USER_PASWD}" >> ${SONAR_CONF_PROPFILE} && \
-    echo "${SONAR_DB_URL}" >> ${SONAR_CONF_PROPFILE} && \
+    cat ${SONAR_CONF_PATH}/sonar_add.properties >> ${SONAR_CONF_PROPFILE} && \
     chown -R sonarapp:sonarapp /home/sonarapp/ && \
     chmod -R 755 /home/sonarapp/bin
 
+# Stage 2: Final Stage
+FROM alpine:latest
 
-# WORKDIR /home/sonarapp/
-SHELL [ "/bin/bash" ]
+# Install only the necessary runtime packages
+RUN apk update && \
+    apk add --no-cache openjdk17-jre procps shadow && \
+    rm -rf /var/cache/apk/*
+
+# Create a non-root user and necessary directories
+RUN addgroup -S sonarapp && \
+    adduser -S -G sonarapp -h /home/sonarapp sonarapp
+
+# Copy the prepared application from the build stage
+COPY --from=build /home/sonarapp /home/sonarapp
+
+# Set the shell to bash and the user to sonarapp
+# SHELL [ "/bin/bash" ]
 USER sonarapp
-CMD [ "/home/sonarapp/bin/linux-x86-64/sonar.sh", "start" ]
+
+# Command to run the SonarQube server
+CMD [ "/home/sonarapp/bin/linux-x86-64/sonar.sh", "console"]

@@ -1,0 +1,18 @@
+name: mail_srv
+
+services:
+  smtp4dev:
+    image: rnwood/smtp4dev
+    container_name: smtp4dev
+    ports:
+      - "3000:80" # Web interface
+      - "25:25" # SMTP server
+
+  mailx:
+    build: .
+    container_name: mailx-container
+    depends_on:
+      - smtp4dev
+    network_mode: service:smtp4dev
+    # ports:
+    #   - "25:25" # SMTP server
