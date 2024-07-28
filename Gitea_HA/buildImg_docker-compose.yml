@@ -1,0 +1,41 @@
+#gitea docker container service
+name: gitea_dcs
+
+services:
+  gitea_server:
+    build: ./Gitea_Images
+    tags:
+      - "gitea_img:v1.2"
+      - "localhost:3000/docker/gitea_img:v1.2"
+    ports:
+      - "3000:3000"
+    networks:
+      - gitea-network
+    volumes:
+      - gitea_data:/gitea
+
+  db_server:
+    build: ./Postgres_Images
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - gitea-network
+    volumes:
+      - pgdb_data:/postgres/Database
+
+networks:
+  gitea-network:
+
+# create new volume if not exists
+volumes:
+  pgdb_data:
+  gitea_data:
+
+    # volumes:
+    #   pgdb_data:
+    #     external: true
+    #     name: pgdb_data
+    #   gitea_data:
+    #     external: true
+    #     name: gitea_data

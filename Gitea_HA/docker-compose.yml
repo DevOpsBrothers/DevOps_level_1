@@ -1,0 +1,67 @@
+name: giteacomposed
+
+services:
+  gitea_server_1:
+    # build: ./Gitea_Images
+    # image: gitea_image:v1.0
+    image: pritamchk98/gitea_image:v1.0
+    ports:
+      - "3001:3000"
+    networks:
+      - gitea-network
+    volumes:
+      - gitea_data:/gitea
+    depends_on:
+      - db_server
+    restart: on-failure
+
+  gitea_server_2:
+    # build: ./Gitea_Images
+    # image: gitea_image:v1.0
+    image: pritamchk98/gitea_image:v1.0
+    ports:
+      - "3002:3000"
+    networks:
+      - gitea-network
+    volumes:
+      - gitea_data:/gitea
+    depends_on:
+      - db_server
+    restart: on-failure
+
+  db_server:
+    image: pritamchk98/pgdb_img:v1.1
+    # build: ./Postgres_Images
+    hostname: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - gitea-network
+    volumes:
+      - pgdb_data:/postgres/Database
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      # - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - gitea-network
+    depends_on:
+      - gitea_server_1
+      - gitea_server_2
+
+networks:
+  gitea-network:
+
+
+volumes:
+  pgdb_data:
+    # external: true
+    # name: pgdb_data
+  gitea_data:
+    # external: true
+    # name: gitea_data
