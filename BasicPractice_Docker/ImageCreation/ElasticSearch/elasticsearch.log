@@ -1,0 +1,8 @@
+[2025-03-02T11:30:38,435][INFO ][o.e.n.j.JdkVectorLibrary ] [66af9e423c86] vec_caps=2
+[2025-03-02T11:30:38,486][INFO ][o.e.n.NativeAccess       ] [66af9e423c86] Using native vector library; to disable start with -Dorg.elasticsearch.nativeaccess.enableVectorLibrary=false
+[2025-03-02T11:30:38,511][INFO ][o.e.n.NativeAccess       ] [66af9e423c86] Using [jdk] native provider and native methods for [Linux]
+[2025-03-02T11:30:38,512][ERROR][o.e.b.Elasticsearch      ] [66af9e423c86] fatal exception while booting Elasticsearch
+java.lang.RuntimeException: can not run elasticsearch as root
+	at org.elasticsearch.bootstrap.Elasticsearch.initializeNatives(Elasticsearch.java:294) ~[elasticsearch-8.17.2.jar:?]
+	at org.elasticsearch.bootstrap.Elasticsearch.initPhase2(Elasticsearch.java:170) ~[elasticsearch-8.17.2.jar:?]
+	at org.elasticsearch.bootstrap.Elasticsearch.main(Elasticsearch.java:75) ~[elasticsearch-8.17.2.jar:?]
