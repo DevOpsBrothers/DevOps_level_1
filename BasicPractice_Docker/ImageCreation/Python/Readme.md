@@ -74,7 +74,7 @@
 docker run -d pritamchk98/pyhton_hw_1:v2
 ```
 
-### Q5. how to clean dangling images or unused containers?
+#### Q5. how to clean dangling images or unused containers?
 
 > [!TIP]
 >
@@ -82,4 +82,26 @@ docker run -d pritamchk98/pyhton_hw_1:v2
 > docker container prune
 >
 > docker image prune
+> ```
+
+#### Q6. Push the image to `DOCKERHUB`
+
+> Faced error:
+>
+> ```sh
+> $ docker push pritamchk98/python_hw_1:v3
+> The push refers to repository [docker.io/pritamchk98/python_hw_1]
+> tag does not exist: pritamchk98/python_hw_1:v3
+> ```
+>
+> Worked:
+>
+> ```sh
+> docker push pritamchk98/pyhton_hw_1:v3
+> The push refers to repository [docker.io/pritamchk98/pyhton_hw_1]
+> 5f70bf18a086: Pushed
+> 94c475a0226a: Pushed
+> a76ba5dc04cf: Pushed
+> 08000c18d16d: Mounted from library/alpine
+> v3: digest: sha256:be53f9e67b7cd6245c4088b064574f069fe50bf85934038fc2b1638e134b895a size: 1153
 > ```
