@@ -105,3 +105,11 @@ docker run -d pritamchk98/pyhton_hw_1:v2
 > 08000c18d16d: Mounted from library/alpine
 > v3: digest: sha256:be53f9e67b7cd6245c4088b064574f069fe50bf85934038fc2b1638e134b895a size: 1153
 > ```
+
+
+#### Q7. Remove all images
+
+>```sh
+>docker image rm -f $(docker images -q)
+>```
+
