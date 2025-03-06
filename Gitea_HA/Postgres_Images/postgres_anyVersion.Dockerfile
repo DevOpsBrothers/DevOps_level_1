@@ -31,7 +31,12 @@ RUN cd /postgres/install && \
     strip /postgres/install/bin/* /postgres/install/lib/*.a && \
     rm -rf postgresql
 
+
+#COPY templated conf files 
 COPY postgresql.conf.template /postgres/postgresql.conf.template
+COPY pg_hba.conf.template /postgres/pg_hba.conf.template
+
+#copy entrypoint 
 COPY entrypoint.sh /postgres/entrypoint.sh
 
 RUN chmod +x /postgres/entrypoint.sh
@@ -42,12 +47,15 @@ FROM alpine:3.21.3
 
 ENV DBPORT=5432 \
     PATH=/postgres/install/bin:${PATH} \
-    MAX_CONN=100
+    MAX_CONN=100 \
+    IP_RANGE="0.0.0.0/0"\
+    ENC_ALGO=md5
 
+# DEFAULT ENC_ALGO md5 but can changed to scram-sha-256
 
 # Install necessary packages
 RUN apk update && \
-    apk add --no-cache openssl-dev readline-dev zlib-dev shadow icu-dev envsubst
+    apk add --no-cache bison openssl-dev readline-dev zlib-dev shadow icu-dev envsubst util-linux-dev flex
 
 # Create a non-root user and necessary directories
 RUN addgroup -S postgres && \
@@ -60,7 +68,7 @@ COPY --from=base /postgres /postgres
 
 #ownership change
 RUN chown -R postgres:postgres /postgres && \
-    chmod -R 700 /postgres 
+    chmod -R 755 /postgres 
 
 
 # Initialize PostgreSQL database in the custom directory
@@ -69,18 +77,22 @@ USER postgres
 # RUN cd /postgres/install/bin && 
 # Initialize PostgreSQL (only if not initialized)
 RUN if [ ! -d "/postgres/Database/base" ]; then pg_ctl initdb -D /postgres/Database; fi && \
-    cp /postgres/postgresql.conf.template /postgres/Database/postgresql.conf.template
+    cp /postgres/postgresql.conf.template /postgres/Database/postgresql.conf.template &&\
+    cp /postgres/pg_hba.conf.template /postgres/Database/pg_hba.conf.template &&\
+    rm /postgres/postgresql.conf.template /postgres/pg_hba.conf.template
 
-
+# Set the default password for the "postgres" user
+RUN echo "ALTER USER postgres WITH PASSWORD 'postgres';" > /tmp/init.sql && \
+    pg_ctl start -D /postgres/Database && \
+    psql -U postgres -p ${DBPORT} -f /tmp/init.sql && \
+    pg_ctl stop -D /postgres/Database && \
+    rm /tmp/init.sql
 
 #expose port 
 EXPOSE ${DBPORT}
 
 #VOLUME
 VOLUME [ "/postgres/Database" ]
-
-#CREATE DEFAULT Database
-
 
 #Entry point
 ENTRYPOINT [ "./postgres/entrypoint.sh" ]
